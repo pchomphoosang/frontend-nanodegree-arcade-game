@@ -19,7 +19,7 @@ var Engine = (function(global) {
 
         lastTime = now;
         win.requestAnimationFrame(main);
-    };
+    }
 
     function init() {
 
@@ -30,7 +30,31 @@ var Engine = (function(global) {
 
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+        //checkSuccuss();
+    }
+    
+    /*
+    function checkSuccuss() {
+        if (Math.floor( player.y ) == 0 ) {
+            player.y =5;
+        }
+    }
+    */
+
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy) {
+            var enemyx  = Math.floor( enemy.x ),
+                enemyy  = Math.floor( enemy.y ),
+                playerx = Math.floor( player.x ),
+                playery = Math.floor( player.y );
+
+            if (( enemyx === playerx ) && ( enemyy === playery )){
+                player.y =5;
+            }
+
+        });
+
     }
 
     function updateEntities(dt) {
@@ -72,7 +96,7 @@ var Engine = (function(global) {
     function reset() {
         // noop
     }
-
+  
     Resources.load([
         'images/stone-block.png',
         'images/water-block.png',
@@ -81,6 +105,6 @@ var Engine = (function(global) {
         'images/char-boy.png'
     ]);
     Resources.onReady(init);
-
+   
     global.ctx = ctx;
 })(this);
